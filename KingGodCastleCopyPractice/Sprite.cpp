@@ -9,11 +9,12 @@ Sprite::Sprite(const WCHAR* fileName) : alpha(255)
 
 	HDC hdc = GameManager::GetInstance()->GetHdc();
 	bitmapDC = CreateCompatibleDC(hdc);
-	SelectObject(bitmapDC, bitmap);
+	renderBitmap = static_cast<HBITMAP>(SelectObject(bitmapDC, bitmap));
 }
 
 Sprite::~Sprite()
 {
+	DeleteObject(SelectObject(bitmapDC, renderBitmap));
 	DeleteDC(bitmapDC);
 }
 

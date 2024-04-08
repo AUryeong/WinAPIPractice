@@ -11,7 +11,7 @@ private:
 	HDC hdcBack = nullptr;
 	HBITMAP bitmapBack = nullptr;
 
-	RECT clientRect;
+	RECT clientRect = { 0, };
 public:
 	void Init();
 	void StartRender();

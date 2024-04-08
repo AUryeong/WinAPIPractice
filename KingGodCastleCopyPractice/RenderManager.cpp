@@ -12,8 +12,8 @@ void RenderManager::Init()
 
 	GetClientRect(hWnd, &clientRect);
 	hdcBack = CreateCompatibleDC(hdc);
-	bitmapBack = CreateCompatibleBitmap(hdcBack, clientRect.right - clientRect.left, clientRect.bottom - clientRect.top);
-	SelectObject(hdcBack, bitmapBack);
+	HBITMAP clientBitmap = CreateCompatibleBitmap(hdcBack, clientRect.right - clientRect.left, clientRect.bottom - clientRect.top);
+	bitmapBack = static_cast<HBITMAP>(SelectObject(hdcBack, bitmapBack));
 
 	SelectObject(hdcBack, static_cast<HBRUSH>(GetStockObject(DC_BRUSH)));
 	SetDCBrushColor(hdcBack, RGB(0, 0, 0));
@@ -48,7 +48,7 @@ void RenderManager::EndRender()
 
 void RenderManager::Release()
 {
+	DeleteObject(SelectObject(hdcBack, bitmapBack));
 	DeleteDC(hdcBack);
-	DeleteObject(bitmapBack);
 	Singleton<RenderManager>::Release();
 }
